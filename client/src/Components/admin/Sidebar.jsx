@@ -40,7 +40,7 @@ export default function Sidebar({ isOpen, onClose }) {
         </div>
 
         {/* Menu */}
-        <nav className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
+        <nav className="flex-y py-6 px-4 space-y-2 h-screen">
           {menu.map((item, i) => (
             <button 
               key={i}
