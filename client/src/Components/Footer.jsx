@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="text-2xl font-black tracking-tighter text-white block mb-4">
-              LOBBY<span className="text-blue-500">.</span>
+             THE LOBBY<span className="text-blue-500">.</span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed mb-6">
               The trusted drive directory for Shillong and the North East. Connecting locals directly.

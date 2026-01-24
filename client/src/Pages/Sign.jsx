@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Mail, Lock, User, ChevronRight, Car, AlertCircle } from 'lucide-react';
-import { useAuth } from '../context/Authcontext';
+import { useAuth } from '../context/AuthContext';
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -122,7 +122,7 @@ export default function AuthPage() {
 
         if (data.user.role === 'admin') navigate('/admin');
         else if (data.user.role === 'driver') navigate('/drive/dashboard');
-        else navigate('/');
+        else navigate('/account');
       } else {
         setStatus({ loading: false, mainError: data.message });
       }

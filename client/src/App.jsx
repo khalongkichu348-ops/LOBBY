@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 
 // Import the helper
 import Scrolltotop from './Components/Scrolltotop';
-import { AuthProvider } from './context/Authcontext'; 
+import { AuthProvider } from './context/AuthContext'; 
 
 // Structure Components
 import Navbar from './Components/Navbar';
@@ -19,6 +19,7 @@ import ErrorPage from './Pages/Error';
 import PrivacyPolicy from './Pages/Privacypolicy';
 import TermsPage from './Pages/Terms';
 import DriverDashboard from './Pages/Driverdashboard';
+import RiderDashboard from './Pages/RiderDashboard';
 
 // --- LAYOUT COMPONENT (Handles the Logic) ---
 function Layout() {
@@ -48,6 +49,7 @@ function Layout() {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/T&C" element={<TermsPage />} />
+            <Route path="/account" element={<RiderDashboard />} />
         </Routes>
       </main>
 

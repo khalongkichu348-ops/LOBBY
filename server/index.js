@@ -9,6 +9,7 @@ const Message = require('./models/Message');
 const bcrypt = require('bcryptjs'); // <--- Import this
 const jwt = require('jsonwebtoken'); // <--- Import this
 const Analytics = require('./models/Analytics');
+const { upload } = require('./cloudinaryconfig');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,50 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 // --- 2. API ENDPOINTS ---
+
+app.post('/api/analytics/track', async (req, res) => {
+  try {
+    const { type, driverId, riderId } = req.body; // <--- Get riderId
+    const newEvent = new Analytics({ type, driverId, riderId });
+    await newEvent.save();
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ success: false });
+  }
+});
+
+// 2. NEW: Get Rider History
+app.get('/api/rider/history', async (req, res) => {
+  try {
+    const { riderId } = req.query;
+    
+    // Find calls made by this rider, populate driver details
+    const events = await Analytics.find({ riderId, type: 'call_click' })
+      .sort({ timestamp: -1 })
+      .populate('driverId', 'fullName phone vehicle profilePic carPic rating') // Get driver info
+      .limit(10); // Last 10 calls
+
+    // Filter out duplicates (if I called the same driver twice)
+    const uniqueDrivers = [];
+    const seenIds = new Set();
+    
+    events.forEach(event => {
+      if (event.driverId && !seenIds.has(event.driverId._id.toString())) {
+        seenIds.add(event.driverId._id.toString());
+        // Attach the timestamp of the call to the driver object for display
+        const driverData = event.driverId.toObject();
+        driverData.lastCalled = event.timestamp;
+        uniqueDrivers.push(driverData);
+      }
+    });
+
+    res.json({ success: true, history: uniqueDrivers });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Error fetching history" });
+  }
+});
+
 
 // 1. SEARCH DRIVERS (Connected to DB)
 app.get('/api/drivers/search', async (req, res) => {
@@ -224,6 +269,29 @@ app.get('/api/admin/stats', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false, message: "Stats failed" });
+  }
+});
+
+// 6. UPLOAD IMAGE ENDPOINT
+// This route accepts a file, uploads it, and updates the user's profile in DB
+app.post('/api/driver/upload', upload.single('image'), async (req, res) => {
+  try {
+    const { userId, type } = req.body; // type = 'profile' or 'car'
+    const imageUrl = req.file.path; // Cloudinary gives us this URL automatically
+
+    // Update the specific field dynamically
+    const updateField = type === 'profile' ? { profilePic: imageUrl } : { carPic: imageUrl };
+
+    const user = await User.findByIdAndUpdate(
+      userId, 
+      updateField, 
+      { new: true }
+    ).select('-password');
+
+    res.json({ success: true, user, imageUrl });
+  } catch (error) {
+    console.error("Upload Error:", error);
+    res.status(500).json({ success: false, message: "Upload failed" });
   }
 });
 

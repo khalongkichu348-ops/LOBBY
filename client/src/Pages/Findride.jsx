@@ -1,11 +1,13 @@
 import { Search, MapPin, Star, Phone, Shield, Filter } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext'; 
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { user } = useAuth();
 
   // 1. Fetch Drivers on Load
   useEffect(() => {
@@ -88,7 +90,7 @@ export default function SearchPage() {
         ) : (
           <div className="space-y-4">
             {drivers.map((driver) => (
-              <RideCard key={driver._id || driver.id} driver={driver} />
+              <RideCard key={driver._id || driver.id} driver={driver} currentUser={user} />
             ))}
           </div>
         )}
@@ -110,7 +112,8 @@ function RideCard({ driver }) {
       await fetch('http://localhost:5000/api/analytics/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'call_click', driverId: driver._id })
+        body: JSON.stringify({ type: 'call_click', driverId: driver._id, 
+        riderId: currentUser ? currentUser.id || currentUser._id : null })
       });
     } catch (err) {
       console.error("Tracking failed", err);
@@ -119,36 +122,52 @@ function RideCard({ driver }) {
   
   return (
     <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition group">
-      <div className="flex justify-between items-start">
+      <div className="flex gap-4">
         
-        {/* Driver Info */}
-        <div className="flex gap-4">
-          <div className="w-14 h-14 bg-slate-900 rounded-full flex items-center justify-center text-white font-bold text-xl">
-            {driver.fullName.charAt(0)}
-          </div>
-          <div>
-            <h3 className="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition">
-              {driver.fullName}
-            </h3>
-            <div className="flex items-center gap-1 text-slate-500 text-sm mb-1">
-              <Star size={14} className="text-yellow-400 fill-yellow-400" />
-              <span className="font-bold text-slate-900">{driver.rating || 5.0}</span>
-              <span>• {vehicle}</span>
+        {/* 1. PROFILE PHOTO (Updated) */}
+        <div className="w-16 h-16 rounded-full overflow-hidden bg-slate-100 shrink-0">
+          {driver.profilePic ? (
+            <img src={driver.profilePic} alt={driver.fullName} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full bg-slate-900 flex items-center justify-center text-white font-bold text-xl">
+              {driver.fullName.charAt(0)}
             </div>
-            <div className="flex items-center gap-1 text-xs font-medium text-slate-400 bg-slate-50 px-2 py-1 rounded w-fit">
-               <MapPin size={12} /> Routes: {routes}
-            </div>
-          </div>
+          )}
         </div>
 
-        {/* Action Button */}
-        <a 
-          href={`tel:${driver.phone}`} 
-          onClick={handleCall} // <--- Attach the tracker here
-          className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg shadow-green-200 transition"
-        >
-          <Phone size={20} />
-        </a>
+        <div className="flex-1">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="font-bold text-lg text-slate-900 group-hover:text-blue-600 transition">
+                {driver.fullName}
+              </h3>
+              
+              <div className="flex items-center gap-2 text-slate-500 text-sm mb-2">
+                <span className="flex items-center gap-1 font-bold text-slate-900">
+                  <Star size={14} className="text-yellow-400 fill-yellow-400" />
+                  {driver.rating || 5.0}
+                </span>
+                <span>• {vehicle}</span>
+              </div>
+            </div>
+
+            {/* Call Button */}
+            <a href={`tel:${driver.phone}`} onClick={handleCall} className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg shadow-green-200 transition">
+              <Phone size={20} />
+            </a>
+          </div>
+
+          {/* 2. CAR PHOTO (New Section - Only shows if driver uploaded one) */}
+          {driver.carPic && (
+             <div className="mt-3 mb-3 w-full h-32 rounded-xl overflow-hidden bg-slate-50 border border-slate-100">
+               <img src={driver.carPic} alt="Car" className="w-full h-full object-cover" />
+             </div>
+          )}
+
+          <div className="flex items-center gap-1 text-xs font-medium text-slate-400 bg-slate-50 px-2 py-1 rounded w-fit">
+             <MapPin size={12} /> Routes: {routes}
+          </div>
+        </div>
       </div>
     </div>
   );

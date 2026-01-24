@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'; // Added useNavigate
 import { Menu, X, User, LogOut, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import { useAuth } from '../context/Authcontext';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function Navbar() {
           
           {/* Logo */}
           <Link to="/" className="text-2xl font-black tracking-tighter text-slate-900 z-50 relative">
-            LOBBY<span className="text-blue-600">.</span>
+            THE LOBBY<span className="text-blue-600">.</span>
           </Link>
 
           {/* --- DESKTOP NAVIGATION --- */}
@@ -30,7 +30,7 @@ export default function Navbar() {
             {(!user || user.role === 'driver') && (
               <Link to="/drive" className="hover:text-black transition">For Drivers</Link>
             )}
-            <Link to="/contact" className="hover:text-black transition">Support</Link>
+            <Link to="/support" className="hover:text-black transition">Support</Link>
           </div>
 
           {/* --- DESKTOP AUTH BUTTONS --- */}
@@ -46,7 +46,7 @@ export default function Navbar() {
                 </span>
                 
                 <Link 
-                  to={user.role === 'driver' ? '/drive/dashboard' : user.role === 'admin' ? '/admin' : '/'} 
+                  to={user.role === 'driver' ? '/drive/dashboard' : user.role === 'admin' ? '/admin' : '/account'} 
                   className="text-sm font-bold text-slate-500 hover:text-blue-600 transition"
                 >
                   Dashboard

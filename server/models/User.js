@@ -13,9 +13,12 @@ const UserSchema = new mongoose.Schema({
   routes:      { type: [String], default: [] }, // e.g., ["Shillong", "Dawki"]
   rating:      { type: Number, default: 5.0 },
   isAvailable: { type: Boolean, default: false }, // The Green Dot
-
   isVerified:  { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
+  
+  profilePic: { type: String, default: "" }, // URL from Cloudinary
+  carPic:     { type: String, default: "" }, // URL from Cloudinary
+  
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('User', UserSchema);
