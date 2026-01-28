@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle, XCircle, Clock, Trash2, Search } from 'lucide-react';
-import API_BASE_URL from '../config';
+import API_BASE_URL from '../../config';
 
 export default function UserTable({ role, limit }) {
   const [users, setUsers] = useState([]);
