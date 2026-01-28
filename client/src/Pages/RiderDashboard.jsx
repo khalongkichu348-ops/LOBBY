@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Phone, MapPin, Clock, LogOut, History } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/Authcontext';
 import API_BASE_URL from '../config';
 
 export default function RiderDashboard() {

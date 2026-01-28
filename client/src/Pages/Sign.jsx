@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Mail, Lock, User, ChevronRight, Car, AlertCircle } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/Authcontext';
 import API_BASE_URL from '../config';
 
 export default function AuthPage() {
