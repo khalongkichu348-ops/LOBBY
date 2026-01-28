@@ -40,7 +40,7 @@ export default function DriverDashboard() {
 
     const syncProfile = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/auth/me', {
+        const res = await fetch(`${API_BASE_URL}/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -61,7 +61,7 @@ export default function DriverDashboard() {
     const statusToSend = newStatus !== undefined ? newStatus : isOnline;
 
     try {
-      const res = await fetch('http://localhost:5000/api/driver/update', {
+      const res = await fetch(`${API_BASE_URL}/driver/update`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -255,7 +255,7 @@ async function handleImageUpload(file, type, driver, setDriver) {
   formData.append('type', type);
 
   try {
-    const res = await fetch('http://localhost:5000/api/driver/upload', {
+    const res = await fetch(`${API_BASE_URL}/driver/upload`, {
       method: 'POST',
       body: formData // No Content-Type header needed for FormData!
     });

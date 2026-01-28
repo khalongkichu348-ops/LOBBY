@@ -14,7 +14,7 @@ export default function RiderDashboard() {
   const handleReport = async () => {
   if (!complaintText) return;
 
-  await fetch("http://localhost:5000/api/complaints", { // <--- Direct URL
+  await fetch(`${API_BASE_URL}/complaints`, { // <--- Direct URL
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -6,6 +6,7 @@ import UserTable from '../Components/admin/UserTable';
 import StatsCard from '../Components/admin/StatsCard';
 import AdminLog from '../Components/admin/AdminLog'; 
 import Sidebar from '../Components/admin/Sidebar';
+import API_BASE_URL from '../config';
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function AdminPage() {
 
   useEffect(() => {
   if (activeTab === 'complaints') {
-    fetch("http://localhost:5000/api/admin/complaints") // <--- Direct URL
+    fetch(`${API_BASE_URL}/admin/complaints`) // <--- Direct URL
       .then(res => res.json())
       .then(data => {
         if (data.success) setComplaints(data.complaints);
@@ -31,7 +32,7 @@ export default function AdminPage() {
 }, [activeTab]);
 
 const resolveComplaint = async (id) => {
-  const res = await fetch(`http://localhost:5000/api/admin/complaints/${id}`, { method: 'PUT' });
+  const res = await fetch(`${API_BASE_URL}/admin/complaints/${id}`, { method: 'PUT' });
   if (res.ok) {
     setComplaints(prev => prev.map(c => c._id === id ? { ...c, status: 'resolved' } : c));
   }
@@ -42,7 +43,7 @@ const resolveComplaint = async (id) => {
       const fetchStats = async () => {
         try {
           // FIX: Direct Localhost URL
-          const res = await fetch('http://localhost:5000/api/admin/stats');
+          const res = await fetch(`${API_BASE_URL}/admin/stats`);
           const data = await res.json();
           if (data.success) setStats(data.stats);
         } catch (err) { console.error("Stats Error"); }

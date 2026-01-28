@@ -19,7 +19,7 @@ export default function SearchPage() {
     setError('');
     try {
       // Build URL: if query exists, add it ?destination=Guwahati
-      const url = `http://localhost:5000/api/drivers/search${query ? `?destination=${query}` : ''}`;
+      const url = `${API_BASE_URL}/drivers/search${query ? `?destination=${query}` : ''}`;
       
       const res = await fetch(url);
       const data = await res.json();
@@ -109,7 +109,7 @@ function RideCard({ driver }) {
   // 1. New Tracking Function
   const handleCall = async () => {
     try {
-      await fetch('http://localhost:5000/api/analytics/track', {
+      await fetch(`${API_BASE_URL}/analytics/track`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'call_click', driverId: driver._id, 

@@ -57,7 +57,7 @@ export default function ContactPage() {
 
     try {
       // 1. Save to YOUR Database (for Admin Panel)
-    await fetch("http://localhost:5000/api/complaints", { // <--- Direct URL
+    await fetch(`${API_BASE_URL}/complaints`, { // <--- Direct URL
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
