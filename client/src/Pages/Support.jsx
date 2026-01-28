@@ -161,7 +161,7 @@ export default function ContactPage() {
               <MapPin size={24} />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900">LOBBY HQ</h3>
+              <h3 className="font-bold text-slate-900">THE LOBBY HQ</h3>
               <p className="text-slate-500 mt-1 leading-relaxed">
                 Laitumkhrah Main Road,<br />
                 Near Beat House, Shillong,<br />
