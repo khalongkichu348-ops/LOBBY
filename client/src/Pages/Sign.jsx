@@ -156,7 +156,7 @@ export default function AuthPage() {
     </div>
 
     {/* RIGHT FORM SIDE */}
-    <div className="w-full md:w-1/2 flex items-center justify-center px-4 py-8 sm:px-6 md:px-10">
+    <div className="w-full md:w-1/2 flex items-center justify-center px-4 py-24 sm:px-6 md:px-10">
       <div className="w-full max-w-md">
 
         {/* HEADER */}
@@ -365,4 +365,5 @@ export default function AuthPage() {
       </div>
     </div>
   </div>
-);
+  );
+}
