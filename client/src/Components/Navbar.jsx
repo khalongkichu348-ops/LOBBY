@@ -30,7 +30,7 @@ export default function Navbar() {
             {(!user || user.role === 'driver') && (
               <Link to="/drive" className="hover:text-black transition">For Drivers</Link>
             )}
-            <Link to="/Support" className="hover:text-black transition">Support</Link>
+            <Link to="/support" className="hover:text-black transition">Support</Link>
           </div>
 
           {/* --- DESKTOP AUTH BUTTONS --- */}
@@ -119,7 +119,7 @@ export default function Navbar() {
               <MobileLink to="/drive" onClick={() => setIsMenuOpen(false)}>For Drivers</MobileLink>
             )}
             
-            <MobileLink to="/contact" onClick={() => setIsMenuOpen(false)}>Support</MobileLink>
+            <MobileLink to="/support" onClick={() => setIsMenuOpen(false)}>Support</MobileLink>
 
             {/* Auth Actions */}
             <div className="pt-6 mt-4 border-t border-slate-100">
