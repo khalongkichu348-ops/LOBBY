@@ -30,7 +30,7 @@ export default function Navbar() {
             {(!user || user.role === 'driver') && (
               <Link to="/drive" className="hover:text-black transition">For Drivers</Link>
             )}
-            <Link to="/support" className="hover:text-black transition">Support</Link>
+            <Link to="/Support" className="hover:text-black transition">Support</Link>
           </div>
 
           {/* --- DESKTOP AUTH BUTTONS --- */}
