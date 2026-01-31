@@ -24,7 +24,7 @@ export default function Hero() {
         </h1>
 
         <p className="text-lg text-slate-600 max-w-2xl mb-8 font-normal leading-relaxed">
-          Skip the haggling. Connect directly with trusted drivers for local trips and outstation adventures.
+          Your one stop solution for all your local trips and outstation adventures. 
         </p>
 
         {/* Buttons */}
