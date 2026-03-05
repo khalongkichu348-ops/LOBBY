@@ -21,6 +21,7 @@ import TermsPage from './Pages/Terms';
 import DriverDashboard from './Pages/Driverdashboard';
 import RiderDashboard from './Pages/RiderDashboard';
 import AboutPage from './Pages/About';
+import InstallPopup from './Components/popup';
 
 // --- LAYOUT COMPONENT (Handles the Logic) ---
 function Layout() {
@@ -37,6 +38,7 @@ function Layout() {
       
       {/* Conditionally render Navbar */}
       {!isAdmin && <Navbar />}
+      <InstallPopup />
       
       <main className={`grow ${isAdmin ? '' : ''}`}>
         <Routes>
